@@ -1,4 +1,4 @@
-function getArrayParams(arr) {
+function getArrayParams(...arr) {
   let min = Infinity;
   let max = -Infinity;
   let sum = 0;
@@ -18,7 +18,6 @@ function getArrayParams(arr) {
 
   return { max, min, avg }
 }
-
 
 function summElementsWorker(...arr) {
 
