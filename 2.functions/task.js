@@ -19,6 +19,9 @@ function getArrayParams(...arr) {
   return { max, min, avg }
 }
 
+console.log(getArrayParams(1, 2, 3, 4, 5)); 
+console.log(getArrayParams(10, -5, 7, 12));
+
 function summElementsWorker(...arr) {
 
 }
