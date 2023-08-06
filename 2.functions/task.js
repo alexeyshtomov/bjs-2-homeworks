@@ -36,4 +36,5 @@
   const arr = [10, 10, 11, 20, 10];
   const sum = summElementsWorker(arr);
 
-  console.log(sum);
+  console.log(summElementsWorker()); 
+  console.log(summElementsWorker(10, 10, 11, 20, 10)); 
