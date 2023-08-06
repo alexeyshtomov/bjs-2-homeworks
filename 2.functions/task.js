@@ -33,8 +33,9 @@
     
     return sum;
   }
+  
   const arr = [10, 10, 11, 20, 10];
   const sum = summElementsWorker(arr);
-
-  console.log(summElementsWorker()); 
-  console.log(summElementsWorker(10, 10, 11, 20, 10)); 
+  
+  console.log(summElementsWorker(arr)); 
+  console.log(summElementsWorker([10, 10, 11, 20, 10]));
