@@ -25,16 +25,15 @@
   
   function summElementsWorker(arr) {
     if (!arr || arr.length === 0) return 0;
-  
+    
     let sum = 0;
     for (let i = 0; i < arr.length; i++) {
       sum += arr[i];
     }
-  
+    
     return sum;
   }
-  
-    const arr = [1, 2, 3, 4, 5];
-    const sum = summElementsWorker(arr);
+  const arr = [10, 20, 30, 1];
+  const sum = summElementsWorker(arr);
 
-    console.log(sum);  
+  console.log(sum);
