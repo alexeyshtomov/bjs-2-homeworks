@@ -33,7 +33,7 @@
     
     return sum;
   }
-  const arr = [10, 20, 30, 1];
+  const arr = [10, 10, 11, 20, 10];
   const sum = summElementsWorker(arr);
 
   console.log(sum);
