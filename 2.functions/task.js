@@ -24,7 +24,7 @@
 
   function summElementsWorker(arr) {
     if (!arr || arr.length === 0) {
-      return null;
+      return 0;
     }
   
     let sum = 0;
@@ -41,7 +41,7 @@
   
   function differenceMaxMinWorker(arr) {
     if (!arr || arr.length === 0) {
-      return null;
+      return 0;
     }
   
     let max = arr[0];
@@ -64,7 +64,7 @@
   
   function differenceEvenOddWorker(arr) {
     if (!arr || arr.length === 0) {
-      return null;
+      return 0;
     }
   
     let sumEvenElement = 0;
