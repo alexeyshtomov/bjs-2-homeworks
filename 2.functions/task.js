@@ -27,13 +27,7 @@
       return 0;
     }
   
-    let sum = 0;
-  
-    for (let i = 0; i < arr.length; i++) {
-      sum += arr[i];
-    }
-  
-    return sum;
+    return arr.reduce((sum, current) => sum + current, 0);
   }
   
   console.log(summElementsWorker([])); 
