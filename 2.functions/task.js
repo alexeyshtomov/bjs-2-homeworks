@@ -30,6 +30,7 @@
     return arr.reduce((sum, current) => sum + current, 0);
   }
   
+  console.log("Summ Elements Worker:");
   console.log(summElementsWorker([])); 
   console.log(summElementsWorker([10, 10, 11, 20, 10]));
   
@@ -53,6 +54,7 @@
     return max - min;
   }
   
+  console.log("Difference Max Min Worker:");
   console.log(differenceMaxMinWorker([]));
   console.log(differenceMaxMinWorker([10, 10, 11, 20, 10]));
   
@@ -75,6 +77,7 @@
     return sumEvenElement - sumOddElement;
   }
   
+  console.log("Difference Even Odd Worker:");
   console.log(differenceEvenOddWorker([94, 51, 57, 41, 47, 66, 58, 10, 38, 17])); 
   console.log(differenceEvenOddWorker([15, 97, 85, 64, 67, 10, 69, 40, 15, 35]));
   
@@ -96,6 +99,7 @@
     return countEvenElement ? sumEvenElement / countEvenElement : 0;
   }
   
+  console.log("Average Even Elements Worker:");
   console.log(averageEvenElementsWorker([1, 2, 3, 4, 5, 6, 7, 8, 9])); 
   console.log(averageEvenElementsWorker([15, 97, 85, 64, 67, 10, 69, 40, 15, 35]));
 
