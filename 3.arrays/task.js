@@ -26,18 +26,20 @@ function compareArrays(arr1, arr2) {
             {firstName: "Владислав", secondName: "Давыдов", age: 40, gender: "мужской"},
             {firstName: "Илья", secondName: "Казаков", age: 35, gender: "мужской"},
             {firstName: "Евгений", secondName: "Кузьмин", age: 19, gender: "мужской"},
-          ]
+        ]
+        
         function getUsersNamesInAgeRange(users, gender) {
-    
-    let oneGender = users.filter(user => user.gender === "мужской");
-            if(oneGender.length === 0)
-            return 0;
+            let oneGender = users.filter(user => user.gender === gender);
+            if (oneGender.length === 0) {
+                return 0;
+            }
+        
+            let ages = oneGender.map(user => user.age);
+            let averageAge = ages.reduce((totalAge, age) => totalAge + age, 0) / ages.length;
+        
+            return averageAge;
         }
-
-
-    let maleAges = oneGender.map(user => user.age);
-    let averageMaleAge = maleAges.reduce((totalAge, age) => totalAge + age, 0) / maleAges.length;
-
+        
         console.log(getUsersNamesInAgeRange(people, "мужской")); // 32
         console.log(getUsersNamesInAgeRange(people, "женский")); // 27.4
         console.log(getUsersNamesInAgeRange([], "женский")); // 0
