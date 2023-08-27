@@ -47,5 +47,5 @@ console.log("Средний балл студента:", student1.getAverage());
 
 student1.exclude("Плохая успеваемость");
 console.log("Студент был исключен:", student1);
-
+///
 
