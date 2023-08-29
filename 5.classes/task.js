@@ -1,5 +1,6 @@
 class PrintEditionItem {
-    constructor(name, releaseDate, pagesCount) {
+    constructor(author, name, releaseDate, pagesCount) {
+      this.author = author;
       this.name = name;
       this.releaseDate = releaseDate;
       this.pagesCount = pagesCount;
@@ -9,15 +10,16 @@ class PrintEditionItem {
   
     fix() {
       this.state *= 1.5;
+      return this.state;
     }
   
-    set state(newState) {
-      if (newState < 0) {
+    set state(value) {
+      if (value < 0) {
         this._state = 0;
-      } else if (newState > 100) {
+      } else if (value > 100) {
         this._state = 100;
       } else {
-        this._state = newState;
+        this._state = value;
       }
     }
   
@@ -26,38 +28,62 @@ class PrintEditionItem {
     }
   }
   
-  class Magazine extends PrintEditionItem {
-    constructor(name, releaseDate, pagesCount) {
-      super(name, releaseDate, pagesCount);
-      this.type = "magazine";
-    }
-  }
-  
   class Book extends PrintEditionItem {
-    constructor(name, releaseDate, pagesCount, author) {
-      super(name, releaseDate, pagesCount);
+    constructor(author, name, releaseDate, pagesCount) {
+      super(author, name, releaseDate, pagesCount);
       this.type = "book";
-      this.author = author;
-    }
-  }
-  
-  class NovelBook extends Book {
-    constructor(name, releaseDate, pagesCount, author) {
-      super(name, releaseDate, pagesCount, author);
-      this.type = "novel";
     }
   }
   
   class FantasticBook extends Book {
-    constructor(name, releaseDate, pagesCount, author) {
-      super(name, releaseDate, pagesCount, author);
+    constructor(author, name, releaseDate, pagesCount) {
+      super(author, name, releaseDate, pagesCount);
       this.type = "fantastic";
     }
   }
   
+  class NovelBook extends Book {
+    constructor(author, name, releaseDate, pagesCount) {
+      super(author, name, releaseDate, pagesCount);
+      this.type = "novel";
+    }
+  }
+  
   class DetectiveBook extends Book {
-    constructor(name, releaseDate, pagesCount, author) {
-      super(name, releaseDate, pagesCount, author);
+    constructor(author, name, releaseDate, pagesCount) {
+      super(author, name, releaseDate, pagesCount);
       this.type = "detective";
     }
   }
+  
+  const picknick = new FantasticBook(
+    "Аркадий и Борис Стругацкие",
+    "Пикник на обочине",
+    1972,
+    168
+  );
+
+  const sherlock = new PrintEditionItem(
+    "Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе",
+    2019,
+    1008
+   );
+   
+   console.log(sherlock.releaseDate); //2019
+   console.log(sherlock.state); //100
+   sherlock.fix();
+   console.log(sherlock.state); //100
+
+   
+   const picknick = new FantasticBook(
+    "Аркадий и Борис Стругацкие",
+    "Пикник на обочине",
+    1972,
+    168
+  );
+  
+  console.log(picknick.author); //"Аркадий и Борис Стругацкие"
+  picknick.state = 10;
+  console.log(picknick.state); //10
+  picknick.fix();
+  console.log(picknick.state); //15
