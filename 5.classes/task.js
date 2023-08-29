@@ -75,15 +75,4 @@ class PrintEditionItem {
    console.log(sherlock.state); //100
 
    
-   const picknick = new FantasticBook(
-    "Аркадий и Борис Стругацкие",
-    "Пикник на обочине",
-    1972,
-    168
-  );
-  
-  console.log(picknick.author); //"Аркадий и Борис Стругацкие"
-  picknick.state = 10;
-  console.log(picknick.state); //10
-  picknick.fix();
-  console.log(picknick.state); //15
+   
