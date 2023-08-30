@@ -41,11 +41,24 @@ class Book extends PrintEditionItem {
   }
 }
 
-class Textbook extends Book {
-  constructor(author, name, releaseDate, pagesCount, subject) {
+class NovelBook extends Book {
+  constructor(author, name, releaseDate, pagesCount) {
     super(author, name, releaseDate, pagesCount);
-    this.type = "textbook";
-    this.subject = subject;
+    this.type = "novel";
+  }
+}
+
+class FantasticBook extends Book {
+  constructor(author, name, releaseDate, pagesCount) {
+    super(author, name, releaseDate, pagesCount);
+    this.type = "fantastic";
+  }
+}
+
+class DetectiveBook extends Book {
+  constructor(author, name, releaseDate, pagesCount) {
+    super(author, name, releaseDate, pagesCount);
+    this.type = "detective";
   }
 }
 
@@ -55,27 +68,24 @@ class Library {
     this.books = [];
   }
 
-  addPrintEdition(printEdition) {
-    if (printEdition.state > 30) {
-      this.books.push(printEdition);
+  addBook(book) {
+    if (book.state > 30) {
+      this.books.push(book);
     }
   }
 
-  findBookByYear(releaseDate) {
-    const book = this.books.find((book) => book.releaseDate === releaseDate);
+  findBookBy(type, value) {
+    const book = this.books.find((book) => book[type] === value);
     return book || null;
   }
 
-  givePrintEdition() {
-    if (this.books.length === 0) {
+  giveBookByName(bookName) {
+    const index = this.books.findIndex((book) => book.name === bookName);
+    if (index === -1) {
       return null;
     } else {
-      return this.books.pop();
+      return this.books.splice(index, 1)[0];
     }
-  }
-
-  restorePrintEdition(printEdition) {
-    printEdition.fix();
   }
 }
 
@@ -83,26 +93,8 @@ const library = new Library("Главная библиотека");
 
 const book1 = new Book("Лев Толстой", "Война и мир", 1869, 1225);
 const book2 = new Book("Федор Достоевский", "Преступление и наказание", 1866, 672);
-const textbook = new Textbook("Иван Иванов", "Высшая математика", 1980, 256, "математика");
 const magazine = new Magazine("Вокруг света", 1925, 72);
 
-library.addPrintEdition(book1);
-library.addPrintEdition(book2);
-library.addPrintEdition(textbook);
-library.addPrintEdition(magazine);
-
-const book3 = library.findBookByYear(1919);
-if (!book3) {
-  const newBook = new Book("Неизвестный автор", "Новая книга", 1919, 150);
-  library.addPrintEdition(newBook);
-}
-
-const borrowedBook = library.givePrintEdition();
-
-borrowedBook.state = 30;
-
-library.restorePrintEdition(borrowedBook);
-
-library.addPrintEdition(borrowedBook);
-
-   
+library.addBook(book1);
+library.addBook(book2);
+library.addBook(magazine);
