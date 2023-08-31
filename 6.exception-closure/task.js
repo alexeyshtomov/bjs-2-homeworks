@@ -32,7 +32,7 @@
     get area() {
       const p = this.perimeter / 2;
       const area = Math.sqrt(p * (p - this.a) * (p - this.b) * (p - this.c));
-      return area.toFixed(3);
+      return parseFloat(area.toFixed(3)); // Возвращает число, а не строку
     }
   }
   
