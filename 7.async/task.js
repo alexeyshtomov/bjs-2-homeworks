@@ -59,9 +59,9 @@ class AlarmClock {
   clearAlarms() {
     this.stop();
     this.alarmCollection = [];
+    this.resetAllCalls(); 
   }
 }
-
 
 const alarmClock = new AlarmClock();
 
