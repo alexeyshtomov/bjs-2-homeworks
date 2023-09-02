@@ -6,7 +6,8 @@ class AlarmClock {
   
     addClock(time, callback, id) {
       if (!time || !callback || !id) {
-          throw new Error('Отсутствуют обязательные аргументы');
+        console.error('Отсутствуют обязательные аргументы');
+        return;
       }
       if (this.alarmCollection.some((alarm) => alarm.id === id)) {
         console.warn('Уже присутствует звонок с таким id');
@@ -69,6 +70,6 @@ class AlarmClock {
   alarmClock.addClock('08:00', () => console.log('Wake up!'), 1);
   alarmClock.addClock('12:00', () => console.log('Lunch time!'), 2);
   alarmClock.addClock('18:00', () => console.log('Dinner time!'), 3);
-  alarmClock.start(); 
-  setTimeout(() => alarmClock.stop(), 5000); 
-  setTimeout(() => alarmClock.clearAlarms(), 15000); 
+  alarmClock.start();
+  setTimeout(() => alarmClock.stop(), 5000);
+  setTimeout(() => alarmClock.clearAlarms(), 15000);
