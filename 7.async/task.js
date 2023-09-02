@@ -63,7 +63,7 @@ class AlarmClock {
   }
 }
 
-// Пример использования:
+
 const alarmClock = new AlarmClock();
 
 alarmClock.addClock("08:00", () => {
