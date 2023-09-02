@@ -1,62 +1,79 @@
 class AlarmClock {
-    constructor() {
-      this.alarmCollection = [];
-      this.intervalId = null;
+  constructor() {
+    this.alarmCollection = [];
+    this.intervalId = null;
+  }
+
+  addClock(time, callback) {
+    if (!time || !callback) {
+      throw new Error('Отсутствуют обязательные аргументы');
     }
-  
-    addClock(time, callback, id) {
-      if (typeof time === 'undefined' || typeof callback === 'undefined' || typeof id === 'undefined') {
-        throw new Error('Отсутствуют обязательные аргументы');
-      }
-      if (this.alarmCollection.some((alarm) => alarm.id === id)) {
-        console.warn('Уже присутствует звонок с таким id');
-        return;
-      }
-      this.alarmCollection.push({ id, time, callback });
+
+    if (this.alarmCollection.some(alarm => alarm.time === time)) {
+      console.warn('Уже присутствует звонок на это же время');
+    } else {
+      this.alarmCollection.push({ time, callback, canCall: true });
     }
-  
-    removeClock(id) {
-      const index = this.alarmCollection.findIndex((alarm) => alarm.id === id);
-      if (index !== -1) {
-        this.alarmCollection.splice(index, 1);
-        return true;
-      }
-      return false;
+  }
+
+  removeClock(time) {
+    this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
+  }
+
+  getCurrentFormattedTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
+  start() {
+    if (this.intervalId !== null) {
+      return;
     }
-  
-    getCurrentFormattedTime() {
-      const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      return `${hours}:${minutes}`;
-    }
-  
-    start() {
-      if (this.intervalId) {
-        return;
-      }
-      this.intervalId = setInterval(() => {
-        this.alarmCollection.forEach((alarm) => {
-          if (alarm.time === this.getCurrentFormattedTime()) {
-            alarm.callback();
-          }
-        });
-        this.resetAllCalls();
-      }, 1000);
-    }
-  
-    stop() {
+
+    this.intervalId = setInterval(() => {
+      const currentTime = this.getCurrentFormattedTime();
+      this.alarmCollection.forEach(alarm => {
+        if (alarm.time === currentTime && alarm.canCall) {
+          alarm.canCall = false;
+          alarm.callback();
+        }
+      });
+    }, 1000);
+  }
+
+  stop() {
+    if (this.intervalId !== null) {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
-  
-    resetAllCalls() {
-      const currentTime = this.getCurrentFormattedTime();
-      this.alarmCollection = this.alarmCollection.filter((alarm) => alarm.time >= currentTime);
-    }
-  
-    clearAlarms() {
-      this.stop();
-      this.alarmCollection = [];
-    }
   }
+
+  resetAllCalls() {
+    this.alarmCollection.forEach(alarm => {
+      alarm.canCall = true;
+    });
+  }
+
+  clearAlarms() {
+    this.stop();
+    this.alarmCollection = [];
+  }
+}
+
+
+const alarmClock = new AlarmClock();
+
+alarmClock.addClock("08:00", () => {
+  console.log("Пора вставать!");
+  alarmClock.removeClock("08:00");
+});
+
+alarmClock.addClock("08:01", () => {
+  console.log("Ещё один звонок!");
+  alarmClock.stop();
+  alarmClock.clearAlarms();
+});
+
+alarmClock.start();
