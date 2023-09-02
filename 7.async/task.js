@@ -61,3 +61,12 @@ class AlarmClock {
       this.alarmCollection = [];
     }
   }
+
+  const alarmClock = new AlarmClock();
+
+alarmClock.addClock('08:00', () => console.log('Wake up!'), 1);
+alarmClock.addClock('12:00', () => console.log('Lunch time!'), 2);
+alarmClock.addClock('18:00', () => console.log('Dinner time!'), 3);
+alarmClock.start(); 
+setTimeout(() => alarmClock.removeClock(2), 5000); 
+setTimeout(() => alarmClock.clearAlarms(), 15000); 
