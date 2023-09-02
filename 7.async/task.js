@@ -12,7 +12,7 @@ class AlarmClock {
         console.warn('Уже присутствует звонок с таким id');
         return;
       }
-      this.alarmCollection.push({ id, time, callback, canCall: true });
+      this.alarmCollection.push({ id, time, callback });
     }
   
     removeClock(id) {
@@ -37,8 +37,7 @@ class AlarmClock {
       }
       this.intervalId = setInterval(() => {
         this.alarmCollection.forEach((alarm) => {
-          if (alarm.time === this.getCurrentFormattedTime() && alarm.canCall) {
-            alarm.canCall = false;
+          if (alarm.time === this.getCurrentFormattedTime()) {
             alarm.callback();
           }
         });
@@ -53,11 +52,7 @@ class AlarmClock {
   
     resetAllCalls() {
       const currentTime = this.getCurrentFormattedTime();
-      this.alarmCollection.forEach((alarm) => {
-        if (alarm.time < currentTime) {
-          alarm.canCall = true;
-        }
-      });
+      this.alarmCollection = this.alarmCollection.filter((alarm) => alarm.time >= currentTime);
     }
   
     clearAlarms() {
@@ -65,4 +60,3 @@ class AlarmClock {
       this.alarmCollection = [];
     }
   }
- 
