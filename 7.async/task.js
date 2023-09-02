@@ -17,10 +17,7 @@ class AlarmClock {
   }
 
   removeClock(time) {
-    const indexToRemove = this.alarmCollection.findIndex(alarm => alarm.time === time);
-    if (indexToRemove !== -1) {
-      this.alarmCollection.splice(indexToRemove, 1);
-    }
+    this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
   }
 
   getCurrentFormattedTime() {
@@ -66,6 +63,7 @@ class AlarmClock {
   }
 }
 
+// Пример использования:
 const alarmClock = new AlarmClock();
 
 alarmClock.addClock("08:00", () => {
