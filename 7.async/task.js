@@ -41,7 +41,6 @@ class AlarmClock {
           if (alarm.time === this.getCurrentFormattedTime() && alarm.canCall) {
             alarm.canCall = false;
             alarm.callback();
-            this.removeClock(alarm.id); // Удаляем звонок после выполнения
           }
         });
         this.resetAllCalls();
@@ -54,8 +53,11 @@ class AlarmClock {
     }
   
     resetAllCalls() {
+      const currentTime = this.getCurrentFormattedTime();
       this.alarmCollection.forEach((alarm) => {
-        alarm.canCall = true;
+        if (alarm.time < currentTime) {
+          alarm.canCall = true;
+        }
       });
     }
   
