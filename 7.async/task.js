@@ -1,6 +1,6 @@
 class AlarmClock {
     constructor() {
-        this.alarmCollection = [];
+        this.alarmCollection = ;
         this.intervalId = null;
     }
 
@@ -59,7 +59,6 @@ class AlarmClock {
 
     clearAlarms() {
         this.stop();
-        this.alarmCollection = [];
+        this.alarmCollection = ;
     }
 }
-  
