@@ -73,3 +73,4 @@ function debounceDecoratorNew(func, delay) {
   return wrapper;
 }
 
+import debounceDecoratorNew()
