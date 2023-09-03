@@ -9,12 +9,10 @@ class AlarmClock {
       throw new Error('Отсутствуют обязательные аргументы');
     }
 
-   
     this.removeClock(time);
 
     this.alarmCollection.push({ time, callback, canCall: true });
   }
-
 
   removeClock(time) {
     this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
@@ -59,6 +57,6 @@ class AlarmClock {
   clearAlarms() {
     this.stop();
     this.alarmCollection = [];
-    this.resetAllCalls(); 
+    this.resetAllCalls();
   }
 }
