@@ -45,6 +45,8 @@ console.log(upgraded(1, 2, 3)); // Вычисляем: 9 (снова вычис�
 
 
 //Задача № 2
+    import { debounceDecoratorNew } from 'decorator.js';
+    
 function debounceDecoratorNew(func, delay) {
   let timeoutId;
   let count = 0;
@@ -70,7 +72,7 @@ function debounceDecoratorNew(func, delay) {
   return wrapper;
 }
 
-// Пример использования и тестов
+
 const sendSignal = (signalOrder, delay) => console.log("Сигнал отправлен", signalOrder, delay);
 const upgradedSendSignal = debounceDecoratorNew(sendSignal, 2000);
 
