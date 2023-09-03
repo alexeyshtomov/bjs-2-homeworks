@@ -71,14 +71,15 @@ describe('Домашнее задание к лекции 7 «Асинхронн
   });
 
   it('будильник должен затем очищать все звонки', () => {
-    clock.addClock("16:45", f => f);
-    clock.addClock("16:45", f => f);
-    clock.addClock("16:45", f => f);
+    clock.addClock('16:45', f => f);
+    clock.addClock('16:45', f => f);
+    clock.addClock('16:45', f => f);
     expect(clock.alarmCollection.length).toEqual(3);
-
+  
     clock.clearAlarms();
     expect(clock.alarmCollection.length).toEqual(0);
   });
+  
 
   it('будильник должен выбрасывать объект ошибки, если время не было передано', () => {
     expect(() => clock.addClock(null, f => f)).toThrow();
