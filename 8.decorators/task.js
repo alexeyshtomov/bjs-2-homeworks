@@ -1,14 +1,14 @@
 //Задача № 1
 
-const md5 = require('js-md5'); 
+const md5 = require('js-md5'); // Подключаем библиотеку для хеширования
 
 function cachingDecoratorNew(func) {
   let cache = [];
 
   function wrapper(...args) {
-    const hash = md5(JSON.stringify(args)); 
+    const hash = md5(JSON.stringify(args)); // Получаем хеш на основе аргументов
 
-    
+    // Ищем элемент в кеше по хешу
     const objectInCache = cache.find((item) => item.hash === hash);
 
     if (objectInCache) { // Если элемент найден в кеше
@@ -20,7 +20,7 @@ function cachingDecoratorNew(func) {
     cache.push({ hash, value: result }); // Добавляем результат в кеш
 
     if (cache.length > 5) {
-      cache.shift(); 
+      cache.shift(); // Если кеш превысил пять элементов, удаляем самый старый
     }
 
     console.log("Вычисляем: " + result);
@@ -30,7 +30,7 @@ function cachingDecoratorNew(func) {
   return wrapper;
 }
 
-
+// Пример использования:
 const addAndMultiply = (a, b, c) => (a + b) * c;
 const upgraded = cachingDecoratorNew(addAndMultiply);
 
@@ -43,8 +43,6 @@ console.log(upgraded(5, 2, 3)); // Вычисляем: 21
 console.log(upgraded(6, 2, 3)); // Вычисляем: 24 (при этом кеш для 1, 2, 3 уничтожается)
 console.log(upgraded(1, 2, 3)); // Вычисляем: 9 (снова вычисляем, кеша нет)
 
-  
-}
 
 //Задача № 2
 function debounceDecoratorNew(func, delay) {
