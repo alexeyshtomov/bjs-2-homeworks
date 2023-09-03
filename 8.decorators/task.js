@@ -45,33 +45,30 @@ console.log(upgraded(1, 2, 3)); // Вычисляем: 9 (снова вычис�
 
 
 //Задача № 2
-    import { debounceDecoratorNew } from 'decorator.js';
-    
+     
 function debounceDecoratorNew(func, delay) {
   let timeoutId;
-  let count = 0;
-  let allCount = 0;
+  let callCount = 0;
 
-  function wrapper(...args) {
-    allCount++;
-    if (!timeoutId) {
-      func(...args);
-      count++;
-    } else {
+  const wrapper = function (...args) {
+    callCount++;
+    if (timeoutId) {
       clearTimeout(timeoutId);
     }
 
-    timeoutId = setTimeout(() => {
-      timeoutId = null;
-    }, delay);
-  }
+    if (!timeoutId) {
+      func.call(this, ...args);
+      timeoutId = setTimeout(() => {
+        timeoutId = null;
+      }, delay);
+    }
+  };
 
-  wrapper.count = () => count;
-  wrapper.allCount = () => allCount;
+  wrapper.count = 0;
+  wrapper.allCount = 0;
 
   return wrapper;
 }
-
 
 const sendSignal = (signalOrder, delay) => console.log("Сигнал отправлен", signalOrder, delay);
 const upgradedSendSignal = debounceDecoratorNew(sendSignal, 2000);

@@ -1,4 +1,4 @@
-import debounceDecoratorNew from 'debounceDecoratorNew.js';
+import debounceDecoratorNew from 'task.js';
 function cachingDecoratorNew(func) {
   let cache = [];
 
