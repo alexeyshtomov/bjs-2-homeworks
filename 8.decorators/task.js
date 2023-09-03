@@ -45,6 +45,50 @@ console.log(upgraded(1, 2, 3)); // Вычисляем: 9 (снова вычис�
 
 
 //Задача № 2
-function debounceDecoratorNew(func, delay) {
-  
+function debounceDecoratorNew(func, interval) {
+  let timeoutId;
+  let count = 0;
+  let allCount = 0;
+
+  function wrapper(...args) {
+    allCount++;
+
+    if (!timeoutId) {
+      count++;
+      func(...args);
+    }
+
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => {
+      timeoutId = null;
+    }, interval);
+  }
+
+  Object.defineProperty(wrapper, 'count', {
+    get: () => count,
+  });
+
+  Object.defineProperty(wrapper, 'allCount', {
+    get: () => allCount,
+  });
+
+  return wrapper;
 }
+
+// Пример использования
+const sendSignal = (signalOrder, delay) => console.log("Сигнал отправлен", signalOrder, delay);
+const upgradedSendSignal = debounceDecoratorNew(sendSignal, 2000);
+
+setTimeout(() => upgradedSendSignal(1, 0), 0);
+setTimeout(() => upgradedSendSignal(2, 300), 300);
+setTimeout(() => upgradedSendSignal(3, 900), 900);
+setTimeout(() => upgradedSendSignal(4, 1200), 1200);
+setTimeout(() => upgradedSendSignal(5, 2300), 2300);
+setTimeout(() => upgradedSendSignal(6, 4400), 4400);
+setTimeout(() => upgradedSendSignal(7, 4500), 4500);
+
+setTimeout(() => {
+  console.log(upgradedSendSignal.count); // Выведет: 3
+  console.log(upgradedSendSignal.allCount); // Выведет: 7
+}, 7000);
