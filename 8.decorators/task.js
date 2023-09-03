@@ -73,4 +73,3 @@ function debounceDecoratorNew(func, delay) {
   return wrapper;
 }
 
-export default debounceDecoratorNew;
