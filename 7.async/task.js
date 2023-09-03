@@ -81,5 +81,5 @@ it("should clear all alarms", function() {
   expect(alarmClock.alarmCollection.length).toBe(2);
 
   alarmClock.clearAlarms();
-  expect(alarmClock.alarmCollection.length).toBe(0);
+  expect(alarmClock.alarmCollection.length).toBe(0); 
 });
