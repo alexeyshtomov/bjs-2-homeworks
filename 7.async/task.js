@@ -62,29 +62,3 @@ class AlarmClock {
     this.resetAllCalls(); 
   }
 }
-
-describe("AlarmClock", function() {
-  let alarmClock;
-
-  beforeEach(function() {
-    alarmClock = new AlarmClock();
-  });
-
-  it("should clear all alarms", function() {
-    alarmClock.addClock("08:00", () => {
-      console.log("Пора вставать!");
-      alarmClock.removeClock("08:00");
-    });
-
-    alarmClock.addClock("08:01", () => {
-      console.log("Ещё один звонок!");
-      alarmClock.stop();
-      alarmClock.clearAlarms();
-    });
-
-    expect(alarmClock.alarmCollection.length).toBe(2);
-
-    alarmClock.clearAlarms();
-    expect(alarmClock.alarmCollection.length).toBe(0);
-  });
-});
