@@ -63,9 +63,6 @@ class AlarmClock {
   }
 }
 
-
-const alarmClock = new AlarmClock();
-
 describe("AlarmClock", function() {
   let alarmClock;
 
