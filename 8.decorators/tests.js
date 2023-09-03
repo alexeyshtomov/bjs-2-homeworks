@@ -1,3 +1,4 @@
+import debounceDecoratorNew from './debounceDecoratorNew';
 function cachingDecoratorNew(func) {
   let cache = [];
 
@@ -67,7 +68,7 @@ describe("Домашнее задание к занятию 8 «Функции �
     });
   });
 
-     import debounceDecoratorNew from './debounceDecoratorNew';
+     
   describe("Задача №2 Усовершенствованный декоратор отложенного вызова", () => {
     
     it("Декоратор выполняет первый синхронный вызов функции", () => {
