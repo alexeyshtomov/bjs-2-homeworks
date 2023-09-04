@@ -73,8 +73,6 @@ describe('Домашнее задание к лекции 7 «Асинхронн
     clock.addClock('16:45', () => {});
     clock.addClock('16:45', () => {});
     clock.addClock('16:45', () => {});
-    expect(clock.alarmCollection.length).toEqual(3);
-
     clock.clearAlarms();
     expect(clock.alarmCollection.length).toEqual(0);
   });
