@@ -14,7 +14,7 @@ class AlarmClock {
     if (existingAlarm) {
       console.warn('Уже присутствует звонок на это же время');
     } 
-    
+  }
   removeClock(time) {
     this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
   }
