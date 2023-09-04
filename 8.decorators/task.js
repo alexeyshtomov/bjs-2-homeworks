@@ -16,8 +16,8 @@ function cachingDecoratorNew(func) {
       return "Из кеша: " + objectInCache.value;
     }
 
-    const result = func(...args); // Вычисляем результат
-    cache.push({ hash, value: result }); // Добавляем результат в кеш
+    const result = func(...args); 
+    cache.push({ hash, value: result }); 
 
     if (cache.length > 5) {
       cache.shift(); 
