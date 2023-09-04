@@ -1,4 +1,4 @@
-//Задача № 1
+ //Задача № 1
 
 import md5 from 'js-md5';
 
@@ -46,31 +46,8 @@ console.log(upgraded(1, 2, 3)); // Вычисляем: 9 (снова вычис�
 
 //Задача № 2
      
-function debounceDecoratorNew(func, delay) {
-  let timeoutId;
-  let callCount = 0;
-  let allCount = 0;
-
-  const wrapper = function (...args) {
-    allCount++;
-    if (!timeoutId) {
-      func.call(this, ...args);
-      callCount++;
-    }
-
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
-    timeoutId = setTimeout(() => {
-      timeoutId = null;
-    }, delay);
-  };
-
-  wrapper.count = () => callCount;
-  wrapper.allCount = () => allCount;
-
-  return wrapper;
+function debounceDecorator(func){
+  return function(...args){
+    setTimeout(()=> func(...args), 2000);
+  }
 }
-
-import debounceDecoratorNew()
