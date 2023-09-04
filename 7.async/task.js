@@ -1,6 +1,6 @@
 class AlarmClock {
   constructor() {
-    this.alarmCollection = [];
+    this.alarmCollection = {};
     this.intervalId = null;
   }
 
@@ -9,17 +9,17 @@ class AlarmClock {
       throw new Error('Отсутствуют обязательные аргументы');
     }
 
-    const existingAlarm = this.alarmCollection.find(alarm => alarm.time === time);
-
-    if (existingAlarm) {
-      console.warn('Уже присутствует звонок на это же время');
-    } else {
-      this.alarmCollection.push({ time, callback, canCall: true });
+    if (!this.alarmCollection[time]) {
+      this.alarmCollection[time] = [];
     }
+
+    this.alarmCollection[time].push({ callback, canCall: true });
   }
 
   removeClock(time) {
-    this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
+    if (this.alarmCollection[time]) {
+      delete this.alarmCollection[time];
+    }
   }
 
   getCurrentFormattedTime() {
@@ -36,12 +36,16 @@ class AlarmClock {
 
     this.intervalId = setInterval(() => {
       const currentTime = this.getCurrentFormattedTime();
-      this.alarmCollection.forEach(alarm => {
-        if (alarm.time === currentTime && alarm.canCall) {
-          alarm.canCall = false;
-          alarm.callback();
-        }
-      });
+      const alarms = this.alarmCollection[currentTime];
+
+      if (alarms) {
+        alarms.forEach(alarm => {
+          if (alarm.canCall) {
+            alarm.canCall = false;
+            alarm.callback();
+          }
+        });
+      }
     }, 1000);
   }
 
@@ -53,14 +57,19 @@ class AlarmClock {
   }
 
   resetAllCalls() {
-    this.alarmCollection.forEach(alarm => {
-      alarm.canCall = true;
-    });
+    for (const time in this.alarmCollection) {
+      if (this.alarmCollection.hasOwnProperty(time)) {
+        const alarms = this.alarmCollection[time];
+        alarms.forEach(alarm => {
+          alarm.canCall = true;
+        });
+      }
+    }
   }
 
   clearAlarms() {
     this.stop();
-    this.alarmCollection = [];
-    this.resetAllCalls();
+    this.alarmCollection = {};
   }
 }
+
