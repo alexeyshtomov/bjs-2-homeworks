@@ -58,9 +58,7 @@ class AlarmClock {
   clearAlarms() {
     this.stop();
     this.alarmCollection = [];
-    this.resetAllCalls();
   }
-}
 
 const alarmClock = new AlarmClock();
 alarmClock.addClock('08:00', () => {
