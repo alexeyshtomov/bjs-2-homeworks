@@ -58,15 +58,4 @@ class AlarmClock {
   clearAlarms() {
     this.stop();
     this.alarmCollection = [];
-  }
-
-const alarmClock = new AlarmClock();
-alarmClock.addClock('08:00', () => {
-  console.log('Пора вставать!');
-});
-alarmClock.addClock('08:01', () => {
-  console.log('Пора вставать искать кофе!');
-});
-alarmClock.addClock('08:02', () => {
-  console.log('Пора вставать и идти на работу!');
-});
+}
