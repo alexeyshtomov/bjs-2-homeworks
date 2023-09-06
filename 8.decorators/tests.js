@@ -1,5 +1,5 @@
-  describe("Домашнее задание к занятию 8 «Функции декораторы»", () => {
-  describe("Задача №1 Усовершенствованный кэширующий декоратор", () => {
+describe("Домашнее задание к занятию 8 «Функции декораторы»", () => {
+  describe("Задача №1 Усовершенствованный кеширующий декоратор", () => {
     let add2 = (a, b) => a + b;
     let multiply3 = (a, b, c) => a * b * c;
     let upgAdd2;
@@ -11,31 +11,30 @@
       upgMultiply3 = cachingDecoratorNew(multiply3);
     });
 
-    it("Декоратор кэширует", () => {
+    it("Декоратор кеширует", () => {
       expect(upgAdd2(1, 2)).toEqual("Вычисляем: 3");
-      expect(upgAdd2(1, 2)).toEqual("Из кэша: 3");
-      expect(upgAdd2(1, 2)).toEqual("Из кэша: 3");
+      expect(upgAdd2(1, 2)).toEqual("Из кеша: 3");
+      expect(upgAdd2(1, 2)).toEqual("Из кеша: 3");
     });
 
-    it("Декоратор кэширует функцию 3х аргументов", () => {
+    it("Декоратор кеширует функцию 3х аргументов", () => {
       expect(upgMultiply3(2, 2, 3)).toEqual("Вычисляем: 12");
-      expect(upgMultiply3(2, 2, 3)).toEqual("Из кэша: 12");
-      expect(upgMultiply3(2, 2, 3)).toEqual("Из кэша: 12");
+      expect(upgMultiply3(2, 2, 3)).toEqual("Из кеша: 12");
+      expect(upgMultiply3(2, 2, 3)).toEqual("Из кеша: 12");
     });
 
-    it("Декоратор кэширует только 5 значений", () => {
+    it("Декоратор кеширует только 5 значений", () => {
       expect(upgMultiply3(2, 2, 4)).toEqual("Вычисляем: 16"); // должно будет удалиться
       expect(upgMultiply3(2, 2, 5)).toEqual("Вычисляем: 20");
       expect(upgMultiply3(2, 2, 6)).toEqual("Вычисляем: 24");
       expect(upgMultiply3(2, 2, 7)).toEqual("Вычисляем: 28");
       expect(upgMultiply3(2, 2, 8)).toEqual("Вычисляем: 32");
-      expect(upgMultiply3(2, 2, 8)).toEqual("Из кэша: 32");
+      expect(upgMultiply3(2, 2, 8)).toEqual("Из кеша: 32");
       expect(upgMultiply3(2, 2, 3)).toEqual("Вычисляем: 12");
       expect(upgMultiply3(2, 2, 4)).toEqual("Вычисляем: 16"); // должно заново вычисляться
     });
   });
 
-     
   describe("Задача №2 Усовершенствованный декоратор отложенного вызова", () => {
     
     it("Декоратор выполняет первый синхронный вызов функции", () => {
