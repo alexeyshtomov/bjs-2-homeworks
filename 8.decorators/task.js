@@ -28,18 +28,21 @@ function debounceDecoratorNew(f, ms) {
   let timeout;
   let count = 0;
   let allCount = 0;
+  let isPending = false;
 
   const debounced = function (...args) {
     allCount++;
     
-    if (count === 0) {
+    if (!isPending) {
       f.apply(this, args);
       count++;
+      isPending = true;
       
       clearTimeout(timeout);
       
       timeout = setTimeout(() => {
         count = 0;
+        isPending = false;
       }, ms);
     } else {
       count++;
