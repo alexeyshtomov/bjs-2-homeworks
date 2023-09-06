@@ -27,14 +27,16 @@ function cachingDecoratorNew(func) {
 function debounceDecoratorNew(f, ms) {
   let timeout;
   let count = 0;
+  let allCount = 0;
 
   const debounced = function (...args) {
     clearTimeout(timeout);
+    allCount++;
 
-    if (count === 0) {
+    if (!timeout || count === 1) {
       f.apply(this, args);
     }
-    
+
     count++;
 
     timeout = setTimeout(() => {
@@ -44,6 +46,11 @@ function debounceDecoratorNew(f, ms) {
 
   Object.defineProperty(debounced, 'count', {
     get: () => count,
+    enumerable: true,
+  });
+
+  Object.defineProperty(debounced, 'allCount', {
+    get: () => allCount,
     enumerable: true,
   });
 
