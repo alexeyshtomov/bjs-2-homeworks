@@ -24,24 +24,44 @@ function cachingDecoratorNew(func) {
   return wrapper;
 }
 
-const showCoords = (x, y) => console.log(`Клик:(${x}, ${y})`);
-
-function decorator(f, ms){
+function debounceDecoratorNew(f, ms) {
   let timeout;
+  let count = 0;
 
-  return function (...args){
+  const debounced = function (...args) {
     clearTimeout(timeout);
 
-    timeout = setTimeout(()=> {
+    if (count === 0) {
       f.apply(this, args);
-      console.timeEnd("time");
+    }
+    
+    count++;
+
+    timeout = setTimeout(() => {
+      count = 0;
     }, ms);
-  }
+  };
+
+  Object.defineProperty(debounced, 'count', {
+    get: () => count,
+    enumerable: true,
+  });
+
+  return debounced;
 }
 
-const delayedFunc = decorator(showCoords, 1000);
+
+
+const showCoords = (x, y) => console.log(`Клик:(${x}, ${y})`);
+
+const debouncedShowCoords = debounceDecoratorNew(showCoords, 1000);
+
 console.time("time");
 
-setTimeout(() => delayedFunc(10, 5), 980);
-setTimeout(() => delayedFunc(20, 10), 980);
-setTimeout(() => delayedFunc(30, 30), 980);
+setTimeout(() => debouncedShowCoords(10, 5), 980);
+setTimeout(() => debouncedShowCoords(20, 10), 980);
+setTimeout(() => debouncedShowCoords(30, 30), 980);
+
+setTimeout(() => {
+  console.log(`Вызвано: ${debouncedShowCoords.count} раз`);
+}, 2000);
