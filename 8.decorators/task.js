@@ -24,76 +24,24 @@ function cachingDecoratorNew(func) {
   return wrapper;
 }
 
-function debounceDecoratorNew(func, delay) {
-  let timeoutId;
-  let count = 0;
-  let allCount = 0;
+const showCoords = (x, y) => console.log(`Клик:(${x}, ${y})`);
 
-  function wrapper(...args) {
-    if (!timeoutId) {
-      
-      const result = func(...args);
-      count++;
-      allCount++;
-      wrapper.count = count; 
-      wrapper.allCount = allCount; 
-      return result;
-    }
+function decorator(f, ms){
+  let timeout;
 
-    return new Promise((resolve) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(async () => {
-        const result = await func(...args);
-        count++;
-        allCount++;
-        timeoutId = undefined;
-        wrapper.count = count; 
-        wrapper.allCount = allCount; 
-        console.log("Сигнал отправлен", args[0], args[1]);
-        resolve(result);
-      }, delay);
-    });
-  }
+  return function (...args){
+    clearTimeout(timeout);
 
-  return wrapper;
+    timeout = setTimeout(()=> {
+      f.apply(this, args);
+      console.timeEnd("time");
+  }, ms);
+}
 }
 
-const sendSignal = async (signalOrder, delay) => {
-  console.log("Сигнал отправлен", signalOrder, delay);
-  return `Сигнал отправлен ${signalOrder} ${delay}`;
-};
+const delayFunc = decotator(showCoords, 1000);
+console.time("time");
 
-const upgradedSendSignal = debounceDecoratorNew(sendSignal, 2000);
-
-setTimeout(async () => {
-  console.log(await upgradedSendSignal(1, 0)); // Сигнал отправлен
-}, 0);
-
-setTimeout(async () => {
-  console.log(await upgradedSendSignal(2, 300)); // проигнорировано
-}, 300);
-
-setTimeout(async () => {
-  console.log(await upgradedSendSignal(3, 900)); // проигнорировано
-}, 900);
-
-setTimeout(async () => {
-  console.log(await upgradedSendSignal(4, 1200)); // проигнорировано
-}, 1200);
-
-setTimeout(async () => {
-  console.log(await upgradedSendSignal(5, 2300)); // Сигнал отправлен
-}, 2300);
-
-setTimeout(async () => {
-  console.log(await upgradedSendSignal(6, 4400)); // проигнорировано
-}, 4400);
-
-setTimeout(async () => {
-  console.log(await upgradedSendSignal(7, 4500)); // Сигнал будет отправлен
-}, 4500);
-
-setTimeout(() => {
-  console.log(upgradedSendSignal.count); // было выполнено 3 отправки сигнала
-  console.log(upgradedSendSignal.allCount); // было выполнено 7 вызовов декорированной функции
-}, 7000);
+setTimeout(() => delayedFunc(10,5));
+setTimeout(() => delayedFunc(20,10) 980);
+setTimeout(() => delayedFunc(30,30) 980);
