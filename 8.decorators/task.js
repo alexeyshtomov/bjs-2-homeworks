@@ -38,9 +38,10 @@ function debounceDecoratorNew(f, ms) {
         count = 0;
         f.apply(this, args);
       }, ms);
+    } else {
+      f.apply(this, args);
+      count = 1;
     }
-
-    count++;
   };
 
   Object.defineProperty(debounced, 'count', {
