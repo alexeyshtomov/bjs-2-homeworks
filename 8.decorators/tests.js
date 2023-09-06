@@ -1,36 +1,4 @@
-function cachingDecoratorNew(func) {
-  let cache = [];
-
-  function wrapper(...args) {
-    const hash = md5(JSON.stringify(args)); 
-
-    
-    const objectInCache = cache.find((item) => item.hash === hash);
-
-    if (objectInCache) { 
-      console.log("Из кеша: " + objectInCache.value);
-      return "Из кэша: " + objectInCache.value;
-    }
-
-    const result = func(...args); // Вычисляем результат
-    cache.push({ hash, value: result }); // Добавляем результат в кеш
-
-    if (cache.length > 5) {
-      cache.shift(); 
-    }
-
-    console.log("Вычисляем: " + result);
-    return "Вычисляем: " + result;
-  }
-
-  return wrapper;
-}
-
-const addAndMultiply = (a, b, c) => (a + b) * c;
-const upgraded = cachingDecoratorNew(addAndMultiply);
-
-
-describe("Домашнее задание к занятию 8 «Функции декораторы»", () => {
+  describe("Домашнее задание к занятию 8 «Функции декораторы»", () => {
   describe("Задача №1 Усовершенствованный кэширующий декоратор", () => {
     let add2 = (a, b) => a + b;
     let multiply3 = (a, b, c) => a * b * c;
