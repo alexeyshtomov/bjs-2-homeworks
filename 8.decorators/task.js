@@ -30,8 +30,6 @@ function debounceDecoratorNew(func, delay) {
   let allCount = 0;
 
   function wrapper(...args) {
-    clearTimeout(timeoutId);
-
     if (!timeoutId) {
       
       const result = func(...args);
@@ -43,13 +41,14 @@ function debounceDecoratorNew(func, delay) {
     }
 
     return new Promise((resolve) => {
-      timeoutId = setTimeout(() => {
-        const result = func(...args);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(async () => {
+        const result = await func(...args);
         count++;
         allCount++;
         timeoutId = undefined;
         wrapper.count = count; 
-        wrapper.allCount = allCount;
+        wrapper.allCount = allCount; 
         console.log("Сигнал отправлен", args[0], args[1]);
         resolve(result);
       }, delay);
