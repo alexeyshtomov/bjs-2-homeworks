@@ -35,13 +35,13 @@ function decorator(f, ms){
     timeout = setTimeout(()=> {
       f.apply(this, args);
       console.timeEnd("time");
-  }, ms);
-}
+    }, ms);
+  }
 }
 
-const delayFunc = decotator(showCoords, 1000);
+const delayedFunc = decorator(showCoords, 1000);
 console.time("time");
 
-setTimeout(() => delayedFunc(10,5));
-setTimeout(() => delayedFunc(20,10) 980);
-setTimeout(() => delayedFunc(30,30) 980);
+setTimeout(() => delayedFunc(10, 5), 980);
+setTimeout(() => delayedFunc(20, 10), 980);
+setTimeout(() => delayedFunc(30, 30), 980);
