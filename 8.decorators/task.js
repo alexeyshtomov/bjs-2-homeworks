@@ -50,8 +50,6 @@ function debounceDecoratorNew(f, ms) {
   return debounced;
 }
 
-
-
 const showCoords = (x, y) => console.log(`Клик:(${x}, ${y})`);
 
 const debouncedShowCoords = debounceDecoratorNew(showCoords, 1000);
