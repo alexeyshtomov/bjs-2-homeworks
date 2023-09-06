@@ -32,15 +32,15 @@ function debounceDecoratorNew(f, ms) {
   const debounced = function (...args) {
     allCount++;
     clearTimeout(timeout);
-    count++;
 
     if (count === 1) {
-      f.apply(this, args);
+      timeout = setTimeout(() => {
+        count = 0;
+        f.apply(this, args);
+      }, ms);
     }
 
-    timeout = setTimeout(() => {
-      count = 0;
-    }, ms);
+    count++;
   };
 
   Object.defineProperty(debounced, 'count', {
