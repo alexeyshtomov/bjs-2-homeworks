@@ -28,37 +28,32 @@ function debounceDecoratorNew(f, ms) {
   let timeout;
   let count = 0;
   let allCount = 0;
-  let isPending = false;
 
   const debounced = function (...args) {
     allCount++;
-    
-    if (!isPending) {
-      f.apply(this, args);
-      count++;
-      isPending = true;
-      
-      clearTimeout(timeout);
-      
+    clearTimeout(timeout);
+
+    if (count === 1) {
       timeout = setTimeout(() => {
         count = 0;
-        isPending = false;
+        f.apply(this, args);
       }, ms);
     } else {
-      count++;
+      f.apply(this, args);
+      count = 1;
     }
   };
-  
+
   Object.defineProperty(debounced, 'count', {
     get: () => count,
     enumerable: true,
   });
-  
+
   Object.defineProperty(debounced, 'allCount', {
     get: () => allCount,
     enumerable: true,
   });
-  
+
   return debounced;
 }
 
