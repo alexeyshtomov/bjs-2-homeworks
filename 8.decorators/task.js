@@ -31,29 +31,31 @@ function debounceDecoratorNew(f, ms) {
 
   const debounced = function (...args) {
     allCount++;
-    clearTimeout(timeout);
-
-    if (count === 1) {
+    
+    if (count === 0) {
+      f.apply(this, args);
+      count++;
+      
+      clearTimeout(timeout);
+      
       timeout = setTimeout(() => {
         count = 0;
-        f.apply(this, args);
       }, ms);
     } else {
-      f.apply(this, args);
-      count = 1;
+      count++;
     }
   };
-
+  
   Object.defineProperty(debounced, 'count', {
     get: () => count,
     enumerable: true,
   });
-
+  
   Object.defineProperty(debounced, 'allCount', {
     get: () => allCount,
     enumerable: true,
   });
-
+  
   return debounced;
 }
 
