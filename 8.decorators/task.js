@@ -1,7 +1,4 @@
  //Задача № 1
-
-import md5 from 'js-md5';
-
 function cachingDecoratorNew(func) {
   let cache = [];
 
