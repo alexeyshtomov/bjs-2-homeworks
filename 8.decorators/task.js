@@ -57,3 +57,43 @@ function debounceDecoratorNew(func, delay) {
 
   return wrapper;
 }
+
+const sendSignal = async (signalOrder, delay) => {
+  console.log("Сигнал отправлен", signalOrder, delay);
+  return `Сигнал отправлен ${signalOrder} ${delay}`;
+};
+
+const upgradedSendSignal = debounceDecoratorNew(sendSignal, 2000);
+
+setTimeout(async () => {
+  console.log(await upgradedSendSignal(1, 0)); // Сигнал отправлен
+}, 0);
+
+setTimeout(async () => {
+  console.log(await upgradedSendSignal(2, 300)); // проигнорировано
+}, 300);
+
+setTimeout(async () => {
+  console.log(await upgradedSendSignal(3, 900)); // проигнорировано
+}, 900);
+
+setTimeout(async () => {
+  console.log(await upgradedSendSignal(4, 1200)); // проигнорировано
+}, 1200);
+
+setTimeout(async () => {
+  console.log(await upgradedSendSignal(5, 2300)); // Сигнал отправлен
+}, 2300);
+
+setTimeout(async () => {
+  console.log(await upgradedSendSignal(6, 4400)); // проигнорировано
+}, 4400);
+
+setTimeout(async () => {
+  console.log(await upgradedSendSignal(7, 4500)); // Сигнал будет отправлен
+}, 4500);
+
+setTimeout(() => {
+  console.log(upgradedSendSignal.count); // было выполнено 3 отправки сигнала
+  console.log(upgradedSendSignal.allCount); // было выполнено 7 вызовов декорированной функции
+}, 7000);
