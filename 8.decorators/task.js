@@ -25,22 +25,18 @@ function cachingDecoratorNew(func) {
 }
 
 function debounceDecoratorNew(f, ms) {
-  let timeout;
-  let count = 0;
-  let allCount = 0;
-
   const debounced = function (...args) {
-    allCount++;
-    clearTimeout(timeout);
+    debounced.allCount = (debounced.allCount || 0) + 1;
+    clearTimeout(debounced.timeout);
 
-    if (count === 0) {
-      timeout = setTimeout(() => {
-        count = 0;
-        f(...args);
-      }, ms);
-    } else {
-      count++;
+    if (!debounced.count) {
+      f(...args);
     }
+
+    debounced.count = debounced.count + 1;
+    debounced.timeout = setTimeout(() => {
+      debounced.count = 0;
+    }, ms);
   };
 
   debounced.count = 0;
