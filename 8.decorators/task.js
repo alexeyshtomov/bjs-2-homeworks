@@ -31,20 +31,13 @@ function debounceDecoratorNew(f, ms) {
   const debounced = function (...args) {
     clearTimeout(timeout);
 
-    if (count === 0) {
-      f(...args);
-    }
-
-    count++;
-
     timeout = setTimeout(() => {
-      if (count > 1) {
-        setTimeout(() => {
-          f(...args);
-        }, 0);
-      }
+      f.count = count;
+      f(...args);
       count = 0;
     }, ms);
+
+    count++;
   };
 
   return debounced;
