@@ -27,27 +27,30 @@ function cachingDecoratorNew(func) {
 function debounceDecoratorNew(f, ms) {
   let timeout;
   let count = 0;
-  let allCount = 0;
 
   const debounced = function (...args) {
-    allCount++;
     clearTimeout(timeout);
 
     if (count === 0) {
-      timeout = setTimeout(() => {
-        count = 0;
-        f(...args);
-      }, ms);
-    } else {
-      count++;
+      f(...args);
     }
-  };
 
-  debounced.count = 0;
-  debounced.allCount = 0;
+    count++;
+
+    timeout = setTimeout(() => {
+      if (count > 1) {
+        setTimeout(() => {
+          f(...args);
+        }, 0);
+      }
+      count = 0;
+    }, ms);
+  };
 
   return debounced;
 }
+
+
 
 const showCoords = (x, y) => console.log(`Клик:(${x}, ${y})`);
 
@@ -56,10 +59,8 @@ const debouncedShowCoords = debounceDecoratorNew(showCoords, 1000);
 console.time("time");
 
 setTimeout(() => debouncedShowCoords(10, 5), 980);
-setTimeout(() => debouncedShowCoords(20, 10), 980);
-setTimeout(() => debouncedShowCoords(30, 30), 980);
+setTimeout(() => debouncedShowCoords(20, 10), 2000); 
 
 setTimeout(() => {
   console.log(`Вызвано: ${debouncedShowCoords.count} раз`);
-}, 2000);
-
+}, 3000);
