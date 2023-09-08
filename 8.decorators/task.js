@@ -25,22 +25,29 @@ function cachingDecoratorNew(func) {
 }
 
 function debounceDecoratorNew(f, ms) {
+  let timeout;
+  let isFirstRun = true;
+  let count = 0;
+
   const debounced = function (...args) {
-    debounced.allCount = (debounced.allCount || 0) + 1;
-    clearTimeout(debounced.timeout);
+    count++;
 
-    if (!debounced.count) {
+    if (isFirstRun) {
       f(...args);
+      isFirstRun = false;
+      timeout = setTimeout(() => {
+        count = 0;
+      }, ms);
+    } else {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        f(...args);
+        count = 0;
+      }, ms);
     }
-
-    debounced.count = debounced.count + 1;
-    debounced.timeout = setTimeout(() => {
-      debounced.count = 0;
-    }, ms);
   };
 
-  debounced.count = 0;
-  debounced.allCount = 0;
+  debounced.getCount = () => count;
 
   return debounced;
 }
@@ -56,5 +63,5 @@ setTimeout(() => debouncedShowCoords(20, 10), 980);
 setTimeout(() => debouncedShowCoords(30, 30), 980);
 
 setTimeout(() => {
-  console.log(`Вызвано: ${debouncedShowCoords.count} раз`);
+  console.log(`Вызвано: ${debouncedShowCoords.getCount()} раз`);
 }, 2000);
