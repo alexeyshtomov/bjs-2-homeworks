@@ -26,24 +26,26 @@ function cachingDecoratorNew(func) {
 
 function debounceDecoratorNew(f, ms) {
   let timeout;
-  let isFirstRun = true;
+  let debouncedCount = 0;
+  let allCount = 0;
 
   const debounced = function (...args) {
-    debounced.allCount++;
+    allCount++;
 
-    if (isFirstRun) {
-      f(...args);
-      isFirstRun = false;
-    } else {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        f(...args);
-      }, ms);
+    clearTimeout(timeout);
+
+    if (!timeout) {
+      debouncedCount++; // Увеличиваем счетчик  если таймер еще не был установлен
     }
+
+    timeout = setTimeout(() => {
+      timeout = null;
+      f(...args);
+    }, ms);
   };
 
-  debounced.count = 0;
-  debounced.allCount = 0;
+  debounced.count = () => debouncedCount;
+  debounced.allCount = () => allCount;
 
   return debounced;
 }
@@ -59,6 +61,8 @@ setTimeout(() => debouncedShowCoords(20, 10), 980);
 setTimeout(() => debouncedShowCoords(30, 30), 980);
 
 setTimeout(() => {
-  console.log(`Вызвано: ${debouncedShowCoords.count} раз`);
+  console.log(`Вызвано: ${debouncedShowCoords.count()} раз`);
+  console.log(`Общее количество вызовов: ${debouncedShowCoords.allCount()} раз`);
 }, 2000);
+
 
