@@ -34,14 +34,14 @@ function debounceDecoratorNew(f, ms) {
 
     clearTimeout(timeout);
 
+    if (!timeout || allCount === 1) {
+      debouncedCount++; // Увеличиваем счетчик только если таймер еще не был установлен или это первый вызов
+    }
+
     timeout = setTimeout(() => {
       timeout = null;
       f(...args);
     }, ms);
-
-    if (!timeout || allCount === 1) {
-      debouncedCount++; // Увеличиваем счетчик только если таймер еще не был установлен
-    }
   };
 
   debounced.count = () => debouncedCount;
