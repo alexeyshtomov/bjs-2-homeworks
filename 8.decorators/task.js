@@ -34,7 +34,7 @@ function debounceDecoratorNew(f, ms) {
 
     clearTimeout(timeout);
 
-    if (!timeout) {
+    if (!timeout || allCount === 1) {
       debouncedCount++; // Увеличиваем счетчик только если таймер еще не был установлен
     }
 
@@ -64,6 +64,7 @@ setTimeout(() => {
   console.log(`Вызвано: ${debouncedShowCoords.count()} раз`);
   console.log(`Общее количество вызовов: ${debouncedShowCoords.allCount()} раз`);
 }, 2000);
+
 
 
 
