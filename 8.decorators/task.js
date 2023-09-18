@@ -26,8 +26,7 @@ function cachingDecoratorNew(func) {
 
 function debounceDecoratorNew(f, ms) {
   let timeout;
-
-  const debounced = function (...args) {
+  let debounced = function (...args) {
     debounced.allCount++;
     clearTimeout(timeout);
 
