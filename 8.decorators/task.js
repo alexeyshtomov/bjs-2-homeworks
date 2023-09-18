@@ -26,33 +26,27 @@ function cachingDecoratorNew(func) {
 
 function debounceDecoratorNew(f, ms) {
   let timeout;
-  let count = 0;
-  let allCount = 0;
 
   const debounced = function (...args) {
-    allCount++;
+    debounced.allCount++;
     clearTimeout(timeout);
-
-    if (!timeout) {
-      f(...args);
-      count++;
-    }
 
     timeout = setTimeout(() => {
       timeout = null;
-      if (allCount > 1) {
+      if (debounced.allCount > 1) {
         f(...args);
-        count++;
+        debounced.count++;
       }
-      allCount = 0;
+      debounced.allCount = 0;
     }, ms);
   };
 
-  debounced.count = 0;
   debounced.allCount = 0;
+  debounced.count = 0;
 
   return debounced;
 }
+
 
 
 const showCoords = (x, y) => console.log(`Клик:(${x}, ${y})`);
