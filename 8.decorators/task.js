@@ -28,12 +28,7 @@ function debounceDecoratorNew(f, ms) {
   let timeout;
   let debounced = function (...args) {
     debounced.allCount++;
-
-    if (!timeout) {
-      f(...args);
-      debounced.count++;
-    }
-
+    
     clearTimeout(timeout);
 
     timeout = setTimeout(() => {
@@ -43,6 +38,11 @@ function debounceDecoratorNew(f, ms) {
         debounced.count++;
       }
     }, ms);
+
+    if (!timeout) {
+      f(...args);
+      debounced.count++;
+    }
   };
 
   debounced.allCount = 0;
@@ -50,6 +50,7 @@ function debounceDecoratorNew(f, ms) {
 
   return debounced;
 }
+
 
 const showCoords = (x, y) => console.log(`Клик: (${x}, ${y})`);
 
