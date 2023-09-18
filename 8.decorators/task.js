@@ -28,14 +28,14 @@ function debounceDecoratorNew(f, ms) {
   let timeout;
   let debounced = function (...args) {
     debounced.allCount++;
-    
+
     if (!timeout) {
       f(...args);
       debounced.count++;
     }
 
     clearTimeout(timeout);
-    
+
     timeout = setTimeout(() => {
       timeout = null;
       if (debounced.allCount > 1) {
@@ -51,8 +51,7 @@ function debounceDecoratorNew(f, ms) {
   return debounced;
 }
 
-
-const showCoords = (x, y) => console.log(`Клик:(${x}, ${y})`);
+const showCoords = (x, y) => console.log(`Клик: (${x}, ${y})`);
 
 const debouncedShowCoords = debounceDecoratorNew(showCoords, 1000);
 
@@ -65,6 +64,5 @@ setTimeout(() => debouncedShowCoords(30, 30), 1100);
 setTimeout(() => {
   console.log(`Вызвано: ${debouncedShowCoords.count} раз`);
 }, 2000);
-
 
 
