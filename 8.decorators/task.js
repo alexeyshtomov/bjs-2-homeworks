@@ -26,22 +26,27 @@ function cachingDecoratorNew(func) {
 
 function debounceDecoratorNew(f, ms) {
   let timeout;
-  let callCount = 0;
-
-  function debounced(...args) {
-    callCount++;
+  let debounced = function (...args) {
+    debounced.allCount++;
+    
+    if (!timeout) {
+      f(...args);
+      debounced.count++;
+    }
 
     clearTimeout(timeout);
-
+    
     timeout = setTimeout(() => {
       timeout = null;
-
-      if (callCount > 0) {
+      if (debounced.allCount > 1) {
         f(...args);
-        callCount = 0;
+        debounced.count++;
       }
     }, ms);
-  }
+  };
+
+  debounced.allCount = 0;
+  debounced.count = 0;
 
   return debounced;
 }
