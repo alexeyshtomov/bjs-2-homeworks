@@ -63,5 +63,5 @@ setTimeout(() => debouncedShowCoords(20, 10), 1100);
 setTimeout(() => debouncedShowCoords(30, 30), 1100);
 
 setTimeout(() => {
-  console.log(`Вызвано: ${debouncedShowCoords.counter.count} раз`);
+  console.log(`Вызвано: ${debouncedShowCoords.count} раз`);
 }, 2000);
