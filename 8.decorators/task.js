@@ -38,11 +38,11 @@ function debounceDecoratorNew(f, ms) {
     
     timeout = setTimeout(() => {
       timeout = null;
-      debounced.allCount--; 
-      if (debounced.allCount > 0) {
+      if (debounced.allCount > 1) {
         f(...args);
         debounced.count++;
       }
+      debounced.allCount = 0; // Сбросить общее количество вызовов после отложенного вызова
     }, ms);
   };
 
