@@ -28,21 +28,26 @@ function debounceDecoratorNew(f, ms) {
   let timeout;
   let debounced = function (...args) {
     debounced.allCount++;
-    
+
     if (!timeout) {
-      f(...args);
       debounced.count++;
     }
 
     clearTimeout(timeout);
-    
+
     timeout = setTimeout(() => {
       timeout = null;
       if (debounced.allCount > 1) {
         f(...args);
-        debounced.count++;
+        if (debounced.count !== undefined) {
+          debounced.count++;
+        }
       }
     }, ms);
+
+    if (!timeout && debounced.allCount === 1) {
+      f(...args);
+    }
   };
 
   debounced.allCount = 0;
