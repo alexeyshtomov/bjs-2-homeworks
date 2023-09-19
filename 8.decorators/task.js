@@ -28,21 +28,20 @@ function debounceDecoratorNew(f, ms) {
   let timeout;
   let debounced = function (...args) {
     debounced.allCount++;
-    
+
     if (!timeout) {
       f(...args);
       debounced.count++;
     }
 
     clearTimeout(timeout);
-    
+
     timeout = setTimeout(() => {
       timeout = null;
       if (debounced.allCount > 1) {
         f(...args);
         debounced.count++;
       }
-      debounced.allCount = 0; // Сбросить общее количество вызовов после отложенного вызова
     }, ms);
   };
 
@@ -52,18 +51,22 @@ function debounceDecoratorNew(f, ms) {
   return debounced;
 }
 
-
-
 const showCoords = (x, y) => console.log(`Клик: (${x}, ${y})`);
 
 const debouncedShowCoords = debounceDecoratorNew(showCoords, 1000);
 
 console.time("time");
 
-setTimeout(() => debouncedShowCoords(10, 5), 1100);
-setTimeout(() => debouncedShowCoords(20, 10), 1100);
-setTimeout(() => debouncedShowCoords(30, 30), 1100);
+setTimeout(() => {
+  debouncedShowCoords(10, 5);
+  setTimeout(() => {
+    debouncedShowCoords(20, 10);
+    setTimeout(() => {
+      debouncedShowCoords(30, 30);
+    }, 1000);
+  }, 1000);
+}, 1000);
 
 setTimeout(() => {
   console.log(`Вызвано: ${debouncedShowCoords.count} раз`);
-}, 2000);
+}, 3000);
