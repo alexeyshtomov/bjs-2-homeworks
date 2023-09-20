@@ -28,6 +28,11 @@ function debounceDecoratorNew(f, ms) {
   let timeout;
   let debounced = function (...args) {
     debounced.allCount++;
+    
+    if (!timeout) {
+      f(...args);
+      debounced.count++;
+    }
 
     clearTimeout(timeout);
     
@@ -35,11 +40,6 @@ function debounceDecoratorNew(f, ms) {
       f(...args);
       debounced.count++;
     }, ms);
-
-    if (debounced.allCount === 1) {
-      f(...args);
-      debounced.count++;
-    }
   };
 
   debounced.allCount = 0;
@@ -47,6 +47,7 @@ function debounceDecoratorNew(f, ms) {
 
   return debounced;
 }
+
 
 const sendSignal = (signalOrder, delay) => console.log("Сигнал отправлен", signalOrder, delay);
 
